@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameControl : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameControl : MonoBehaviour
 
     GameObject chooseButton;
     GameObject itselfBTN;
+    public AudioSource [] voices;
+    public GameObject[] buttons; 
 
     public Sprite defaultSprite;
     void Start()
@@ -22,44 +25,72 @@ public class GameControl : MonoBehaviour
         
     }
 
-    public void GetObjects(GameObject obj)
+    public void buttonsState(bool state)  // coklu tiklamaya izin vermiyor tum butonlari kapatiyor
+    {
+        foreach (var item in buttons)
+        {
+            if (item !=null)    // dizide silinen objeleri dikkate almiyor
+            {
+                item.GetComponent<Image>().raycastTarget = state;
+            }
+           
+        }
+    }
+    public void GetObjects(GameObject obj) // tiklandiginda objeyi esitliyor ve childin imageni atiyor
     {
         itselfBTN=obj;
         itselfBTN.GetComponent<Image>().sprite = itselfBTN.GetComponentInChildren<SpriteRenderer>().sprite;
+        itselfBTN.GetComponent<Image>().raycastTarget = false;
     }
     public void MyButtonClick(int value)
     {
-        Control(value,itselfBTN);
+        Control(value);
     }
 
-    void Control(int getValue ,GameObject getObje)
+    void Control(int getValue )
     {
         if (numChoices == 0)// first button click 
         {
             numChoices = getValue;
-            chooseButton= getObje;
+            chooseButton= itselfBTN;
+            voices[1].Play();
         }
         else // Pressing any button a second time
         {
-            if (numChoices == getValue)
-            {
-                //Debug.Log("Matched");
-                Destroy(chooseButton.gameObject);
-                Destroy(getObje.gameObject);
+           StartCoroutine(checkIT(getValue));
+        }
+    }
 
-                numChoices = 0;
-                chooseButton = null;
+    IEnumerator checkIT(int getValue) // butonlara tiklandiginda 1 saniye gec calistiryor 
+    {
+        buttonsState(false);
+        yield return new WaitForSeconds(1);
+        if (numChoices == getValue)
+        {
+            //Debug.Log("Matched");
+            chooseButton.GetComponent<Image>().enabled() = false;
+            chooseButton.GetComponent<Button>().enabled() = false;
 
-            }
-            else
-            {
-                // Debug.Log("did not Matched");
-                chooseButton.GetComponent<Image>().sprite = defaultSprite;
-                getObje.GetComponent<Image>().sprite = defaultSprite;
-              
-                numChoices = 0;
-                chooseButton = null;
-            }
+            itselfBTN.GetComponent<Image>().enabled() = false;
+            itselfBTN.GetComponent<Button>().enabled() = false;
+            /*
+            Destroy(chooseButton.gameObject);
+            Destroy(itselfBTN.gameObject);*/
+
+            numChoices = 0;
+            chooseButton = null;
+            buttonsState(true);
+
+        }
+        else
+        {
+            // Debug.Log("did not Matched");
+            voices[2].Play();
+            chooseButton.GetComponent<Image>().sprite = defaultSprite;
+            itselfBTN.GetComponent<Image>().sprite = defaultSprite;
+            buttonsState(true);
+            numChoices = 0;
+            chooseButton = null;
         }
     }
 }
