@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
+
+
 public class GameControl : MonoBehaviour
 {
     int numChoices;
@@ -31,7 +33,7 @@ public class GameControl : MonoBehaviour
         {
             if (item !=null)    // dizide silinen objeleri dikkate almiyor
             {
-                item.GetComponent<Image>().raycastTarget = state;
+                item.GetComponent<UnityEngine.UI.Image>().raycastTarget = state;
             }
            
         }
@@ -39,8 +41,8 @@ public class GameControl : MonoBehaviour
     public void GetObjects(GameObject obj) // tiklandiginda objeyi esitliyor ve childin imageni atiyor
     {
         itselfBTN=obj;
-        itselfBTN.GetComponent<Image>().sprite = itselfBTN.GetComponentInChildren<SpriteRenderer>().sprite;
-        itselfBTN.GetComponent<Image>().raycastTarget = false;
+        itselfBTN.GetComponent<UnityEngine.UI.Image>().sprite = itselfBTN.GetComponentInChildren<SpriteRenderer>().sprite;
+        itselfBTN.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
     }
     public void MyButtonClick(int value)
     {
@@ -68,11 +70,11 @@ public class GameControl : MonoBehaviour
         if (numChoices == getValue)
         {
             //Debug.Log("Matched");
-            chooseButton.GetComponent<Image>().enabled() = false;
-            chooseButton.GetComponent<Button>().enabled() = false;
+            chooseButton.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            itselfBTN.GetComponent<UnityEngine.UI.Image>().enabled = false;
 
-            itselfBTN.GetComponent<Image>().enabled() = false;
-            itselfBTN.GetComponent<Button>().enabled() = false;
+            //itselfBTN.GetComponent<UnityEngine.UI.Image>().enabled = false;
+           // itselfBTN.GetComponent<UnityEngine.UI.Button>().enabled = false;
             /*
             Destroy(chooseButton.gameObject);
             Destroy(itselfBTN.gameObject);*/
@@ -86,8 +88,9 @@ public class GameControl : MonoBehaviour
         {
             // Debug.Log("did not Matched");
             voices[2].Play();
-            chooseButton.GetComponent<Image>().sprite = defaultSprite;
-            itselfBTN.GetComponent<Image>().sprite = defaultSprite;
+            itselfBTN.GetComponent<UnityEngine.UI.Image>().sprite = defaultSprite;
+            chooseButton.GetComponent<UnityEngine.UI.Image>().sprite = defaultSprite;
+           
             buttonsState(true);
             numChoices = 0;
             chooseButton = null;
