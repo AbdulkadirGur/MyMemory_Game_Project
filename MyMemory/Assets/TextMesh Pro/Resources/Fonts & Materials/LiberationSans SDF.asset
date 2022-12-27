@@ -35,9 +35,9 @@ Material:
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
-    - _OutlineWidth: 0.32
+    - _OutlineWidth: 0.264
     - _PerspectiveFilter: 0.875
-    - _ScaleRatioA: 0.59701496
+    - _ScaleRatioA: 0.6200482
     - _ScaleRatioB: 1
     - _ScaleRatioC: 0
     - _ScaleX: 1
@@ -52,7 +52,7 @@ Material:
     - _TextureHeight: 1024
     - _TextureWidth: 1024
     - _UnderlayDilate: 1
-    - _UnderlayOffsetX: 0
+    - _UnderlayOffsetX: -0.04
     - _UnderlayOffsetY: 1
     - _UnderlaySoftness: 1
     - _VertexOffsetX: 0

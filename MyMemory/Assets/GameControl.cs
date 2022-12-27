@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour
     public GameObject[] GameOverPanels ;
     //-----------------------
     //Count    
-    float Alltime = 3;
+    float Alltime = 120;
     float minute;
     float second;
     bool Timer;
@@ -112,7 +112,7 @@ public class GameControl : MonoBehaviour
         {
             numChoices = getValue;
             chooseButton= itselfBTN;
-            voices[1].Play();
+            
         }
         else // Pressing any button a second time
         {
@@ -130,9 +130,10 @@ public class GameControl : MonoBehaviour
             currentSucces++;
             chooseButton.GetComponent<UnityEngine.UI.Image>().enabled = false;
             itselfBTN.GetComponent<UnityEngine.UI.Image>().enabled = false;
+            voices[0].Play();
 
             //itselfBTN.GetComponent<UnityEngine.UI.Image>().enabled = false;
-           // itselfBTN.GetComponent<UnityEngine.UI.Button>().enabled = false;
+            // itselfBTN.GetComponent<UnityEngine.UI.Button>().enabled = false;
             /*
             Destroy(chooseButton.gameObject);
             Destroy(itselfBTN.gameObject);*/
@@ -150,7 +151,7 @@ public class GameControl : MonoBehaviour
         else
         {
             // Debug.Log("did not Matched");
-            voices[2].Play();
+            voices[1].Play();
             itselfBTN.GetComponent<UnityEngine.UI.Image>().sprite = defaultSprite;
             chooseButton.GetComponent<UnityEngine.UI.Image>().sprite = defaultSprite;
            
