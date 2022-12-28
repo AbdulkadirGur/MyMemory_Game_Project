@@ -23,45 +23,87 @@ public class GameControl : MonoBehaviour
     public Sprite defaultSprite;
     public TextMeshProUGUI Count;
     public GameObject[] GameOverPanels ;
+    public UnityEngine.UI.Slider TimeSlider;
     //-----------------------
     //Count    
-    float Alltime = 120;
+    public float Alltime;
     float minute;
     float second;
     bool Timer;
+    float lastTime;
     //-----------------------
 
-
+    public GameObject grid;
+    public GameObject LevelPool;
+    bool createState;
+    int createCount;
+    int allImageNum;
 
 
     void Start()
     {
         numChoices = 0;
         Timer= true;
+        lastTime = 0;
+        TimeSlider.value = lastTime;
+        TimeSlider.maxValue = Alltime;
+        createState= true;
+        createCount = 0;
+        allImageNum = LevelPool.transform.childCount;
+
+        StartCoroutine(Create());
+
+
+
     }
 
     void Update()
     {
 
-        if(Timer && Alltime> 1)
+        if(Timer  && lastTime!=Alltime)
         {
-            Alltime -= Time.deltaTime;
+            lastTime += Time.deltaTime;
+            TimeSlider.value = lastTime;   
 
-            minute = Mathf.FloorToInt(Alltime / 60);
+            if(TimeSlider.maxValue == TimeSlider.value)
+            {
+                Timer = false;               
+                GameOver();
+            }
+            /*minute = Mathf.FloorToInt(Alltime / 60);
             second = Mathf.FloorToInt(Alltime % 60);
 
             // Count.text = Mathf.FloorToInt(Alltime).ToString();
 
-            Count.text = string.Format("{0:00}:{1:00}", minute, second);
+            Count.text = string.Format("{0:00}:{1:00}", minute, second);*/
         }
-        else
-        {
-            Timer= false;
-            Debug.Log("Time Up");
-            GameOver();
-        }
+        
        
     }
+
+    IEnumerator Create()
+    {
+        while (createState)
+        {
+            int rnum = Random.Range(0, LevelPool.transform.childCount - 1);
+            if(LevelPool.transform.GetChild(rnum).gameObject != null)
+            {
+                LevelPool.transform.GetChild(rnum).transform.SetParent(grid.transform);
+                createCount++;
+
+                if (createCount == allImageNum)
+                {
+                    createState= false;
+                    Destroy(LevelPool.gameObject);
+                }
+            }
+            
+            
+        }
+
+        yield return new  WaitForSeconds(.1f);
+    }
+
 
     void GameOver()
     {
@@ -82,6 +124,19 @@ public class GameControl : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Pause()
+    {
+        GameOverPanels[2].SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void Continue()
+    {
+        GameOverPanels[2].SetActive(false);
+        Time.timeScale = 1;
+        
     }
 
     public void buttonsState(bool state)  // coklu tiklamaya izin vermiyor tum butonlari kapatiyor
