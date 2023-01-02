@@ -6347,7 +6347,7 @@ MonoBehaviour:
   - {fileID: 607120573}
   - {fileID: 1132533366}
   TimeSlider: {fileID: 497008666}
-  Alltime: 120
+  Alltime: 200
   grid: {fileID: 1282085582}
   LevelPool: {fileID: 1053718359}
 --- !u!4 &1079161390

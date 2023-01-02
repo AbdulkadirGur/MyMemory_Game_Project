@@ -50,6 +50,9 @@ public class GameControl : MonoBehaviour
         createState= true;
         createCount = 0;
         allImageNum = LevelPool.transform.childCount;
+        levelSucces = (LevelPool.transform.childCount )/2;
+        
+        currentSucces = 0;
 
         StartCoroutine(Create());
 
