@@ -141,6 +141,10 @@ public class GameControl : MonoBehaviour
         Time.timeScale = 1;
         
     }
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(2);
+    }
 
     public void buttonsState(bool state)  // coklu tiklamaya izin vermiyor tum butonlari kapatiyor
     {
@@ -202,6 +206,7 @@ public class GameControl : MonoBehaviour
 
             if(currentSucces==levelSucces)
             {
+               
                 Win();
             }
 
